@@ -1,0 +1,28 @@
+{
+  "name": "3vlad-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify public/assets/index.js -t scssify > public/bundle.js",
+    "watch": "watchify public/assets/index.js -t scssify -o public/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://p3xx.tk:3000/p3xx/3vlad-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^16.5.0",
+    "scssify": "^3.0.1",
+    "uglify-js": "^3.7.5",
+    "watchify": "^3.11.1"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0",
+    "socket.io-client": "^2.3.0"
+  }
+}
