@@ -15247,12 +15247,17 @@ var $ = require('jquery');
 
 var moment = require('moment');
 moment.locale('uk');
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // Great success! All the File APIs are supported.
+} else {
+    alert('The File APIs are not fully supported in this browser.');
+}
 
 function resize() {
     var bodyWidth = $('body').width();
     var bodyHeight = $('body').height();
 
-    $('.mainWindow').width();
+    // $('.mainWindow').width();
     $('.mainWindow').css({
         transform: 'scale(' + bodyWidth / 1920 + ')'
     });
@@ -15266,57 +15271,109 @@ var translateY = 1000;
 var translateMessageStep = 220;
 var translateSysStep = 80;
 $('.currentTime').html(moment(new Date()).format('HH:mm'));
-$('.fa-paperclip').on('click',function () {
-    userMessageLite('Gorbunov', new Date().getTime())
+// var userArray = [Gorbunov,Mouse,Shark];
+var users = {};
+users.Gorbunov = {};
+users.Gorbunov.name = 'Gorbunov';
+users.Gorbunov.icon = './assets/users/user_gorbunov.jpg';
+users.Mouse = {};
+users.Mouse.name = 'Mouse';
+users.Mouse.icon = './assets/users/user_mouse.png';
+users.Shark = {};
+users.Shark.name = 'Shark';
+users.Shark.icon = './assets/users/user_shark.png';
+console.log(users);
+var smiles = {};
+smiles.angry = './assets/icons/angry.png';
+
+
+var scenario = [
+    // ['Shark', 'smirkface.png'],
+    ['Shark', 'Чем вaм помочь?'],
+    ['Mouse', 'Чем вaм помочь?'],
+    ['Shark', 'A что умеете?'],
+    ['Mouse', 'Всё.'],
+    ['Shark', 'Сделaйте что-нибудь'],
+    ['system', 'Чaсы: <b>громко тикaют</b>'],
+    ['Mouse', 'Делaю.'],
+    ['Mouse', 'Делaл'],
+    ['Mouse', 'smirkface.png'],
+    ['Mouse', 'Уже готово.'],
+    ['Shark', 'Что вы сделaли?'],
+    ['Mouse', 'Помог вaм'],
+    ['Shark', 'Пьяный чтоли?'],
+    ['Mouse', 'hmmface.png'],
+    ['Mouse', 'Я бы ещё выпил'],
+    ['Mouse', 'angry.png']
+
+];
+
+
+
+$('.fa-paperclip').on('click', function () {
+    userMessage('Gorbunov', 'new Date().getTime()');
 });
 
-$('.fa-paper-plane').on('click',function () {
-setTimeout(() => {
-                userMessage('Gorbunov', new Date().getTime());
+$('.fa-paper-plane').on('click', function () {
+    // console.log(scenario[0][0]);
+    // for(var i =0 ;i< scenario.length;i++){
+    var i = 0;
+    var lastUserName;
+    clearInterval(int);
+    var int = setInterval(() => {
+        if (scenario[i][0] == 'system') {
+            systemMessage(scenario[i][1]);
+        } else {
+            userMessage(scenario[i][0], scenario[i][1]);
+        }
 
-}, 500);
-        setTimeout(() => {
-           userMessageLite('Gorbunov', new Date().getTime())
-        }, 1500);
+        lastUserName = scenario[i][0];
+        i++;
+        if (i >= scenario.length) {
+            clearInterval(int);
+        }
+    }, Math.floor(Math.random() * 500 + 300));
+    // }
 
 
 });
 
-$('.fa-smile').on('click',function () {
-   systemMessage('<b>Иди нахуй</b>'); 
+$('.fa-smile').on('click', function () {
+    systemMessage('<b>Иди нахуй</b>');
 });
+var lastUserName;
 
 function userMessage(user, message) {
-        var audioElement = document.createElement('audio');
+
+    // console.log(message.split('.')[1]);
+    var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './assets/new_message_sound.mp3');
     audioElement.load();
     audioElement.play();
     var aricleClass = new Date().getTime();
-    $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon"></div><div><div class="userName">'+user+'</div><div class="userMsg">' + message + '</div></div></article>');
+    if (lastUserName == user) {
+        if (message.split('.')[1] == 'png') {
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userPlace"></div><div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+        } else {
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userPlace"></div><div><div class="userMsg">' + message + '</div></div></article>');
+        }
+    } else {
+        if (message.split('.')[1] == 'png') {
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+        } else {
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
+        }
+    }
+
     var currentHeight = $('.' + aricleClass).height();
-    var translateVar = translateY - currentHeight-220;
-    translateY = translateY - currentHeight-10;
+    var translateVar = translateY - currentHeight - 220;
+    translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
     console.log(translateY);
+    lastUserName = user;
 }
-function userMessageLite(user, message) {
-    var audioElement = document.createElement('audio');
-audioElement.setAttribute('src', './assets/new_message_sound.mp3');
-audioElement.load();
-audioElement.play();
-var aricleClass = new Date().getTime();
-$('.msgWindow').append('<article class=' + aricleClass + '><div class="userPlace"></div><div><div class="userName">'+user+'</div><div class="userMsg">' + message + '</div></div></article>');
-var currentHeight = $('.' + aricleClass).height();
-var translateVar = translateY - currentHeight-220;
-translateY = translateY - currentHeight-10;
-$('.msgWindow').css({
-    'transform': 'translate(0px,' + translateVar + 'px)'
-}, 100);
-console.log(translateY);
-}
-
 
 
 function systemMessage(message) {
@@ -15325,17 +15382,17 @@ function systemMessage(message) {
     audioElement.load();
     audioElement.play();
     var aricleClass = new Date().getTime();
-    $('.msgWindow').append('<div class=' + aricleClass + '>'+message+'</div>');
+    $('.msgWindow').append('<div class=' + aricleClass + '>' + message + '</div>');
     var currentHeight = $('.' + aricleClass).height();
     console.log('currentHeight', currentHeight);
-    var translateVar = translateY - currentHeight-220;
-    translateY = translateY - currentHeight-10;
+    var translateVar = translateY - currentHeight - 220;
+    translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
     console.log(translateY);
 }
 },{"./style.scss":5,"jquery":1,"moment":2,"scssify":3}],5:[function(require,module,exports){
-var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100%;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;background-color:#ccc;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:150px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background:url(\"assets/users/gorbunov.jpg\") center no-repeat;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold}.msgWindow>article>div>.userMsg{color:#000}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}\n"
+var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100%;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;background-color:#ccc;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:150px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article .Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold}.msgWindow>article>div>.userMsg{color:#000}.msgWindow>article>div>.angry{width:200px;height:200px;background:url(\"assets/smiles/angry.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.smirkface{width:200px;height:200px;background:url(\"assets/smiles/smirkface.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.hmmface{width:200px;height:200px;background:url(\"assets/smiles/hmmface.png\") center no-repeat;background-size:150px 150px}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}\n"
 module.exports = require('scssify').createStyle(css, {})
 },{"scssify":3}]},{},[4]);

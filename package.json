@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify public/assets/index.js -t scssify > public/bundle.js",
-    "watch": "watchify public/assets/index.js -t scssify -o public/bundle.js"
+    "public": "watchify public/assets/public.js -t scssify -o public/bundlePublic.js",
+    "config": "watchify public/assets/config.js -t scssify -o public/bundleConfig.js"
+
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
     "watchify": "^3.11.1"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "socket.io-client": "^2.3.0"

@@ -1,0 +1,1 @@
+console.error("Error: Cannot find module './style.scss' from 'D:\\nodejsprojects\\3vlad-chat\\config\\assets'");
