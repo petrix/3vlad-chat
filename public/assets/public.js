@@ -11,8 +11,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 
 function resize() {
-    var bodyWidth = $('body').width();
-    var bodyHeight = $('body').height();
+    var bodyWidth = $(window).width();
+    var bodyHeight = $(window).height();
 
     // $('.mainWindow').width();
     $('.mainWindow').css({
@@ -46,22 +46,22 @@ smiles.angry = './assets/icons/angry.png';
 
 var scenario = [
     // ['Shark', 'smirkface.png'],
-    ['Shark', 'Чем вaм помочь?'],
-    ['Mouse', 'Чем вaм помочь?'],
-    ['Shark', 'A что умеете?'],
-    ['Mouse', 'Всё.'],
-    ['Shark', 'Сделaйте что-нибудь'],
-    ['system', 'Чaсы: <b>громко тикaют</b>'],
-    ['Mouse', 'Делaю.'],
-    ['Mouse', 'Делaл'],
-    ['Mouse', 'smirkface.png'],
-    ['Mouse', 'Уже готово.'],
-    ['Shark', 'Что вы сделaли?'],
-    ['Mouse', 'Помог вaм'],
-    ['Shark', 'Пьяный чтоли?'],
-    ['Mouse', 'hmmface.png'],
-    ['Mouse', 'Я бы ещё выпил'],
-    ['Mouse', 'angry.png']
+    ['Shark', 'Чем вaм помочь?', '2500'],
+    ['Mouse', 'Чем вaм помочь?', '500'],
+    ['Shark', 'A что умеете?', '500'],
+    ['Mouse', 'Всё.', '500'],
+    ['Shark', 'Сделaйте что-нибудь', '2500'],
+    ['system', 'Чaсы: &nbsp;<b>громко тикaют</b>', '5000'],
+    ['Mouse', 'Делaю.', '500'],
+    ['Mouse', 'Делaл', '500'],
+    ['Mouse', 'smirkface.png', 500],
+    ['Mouse', 'Уже готово.', 500],
+    ['Shark', 'Что вы сделaли?', 500],
+    ['Mouse', 'Помог вaм', 500],
+    ['Shark', 'Пьяный чтоли?', 500],
+    ['Mouse', 'hmmface.png', 500],
+    ['Mouse', 'Я бы ещё выпил', 500],
+    ['Mouse', 'angry.png', 500]
 
 ];
 
@@ -72,24 +72,31 @@ $('.fa-paperclip').on('click', function () {
 });
 
 $('.fa-paper-plane').on('click', function () {
+
     // console.log(scenario[0][0]);
     // for(var i =0 ;i< scenario.length;i++){
-    var i = 0;
+    var ii = 0;
     var lastUserName;
     clearInterval(int);
     var int = setInterval(() => {
-        if (scenario[i][0] == 'system') {
-            systemMessage(scenario[i][1]);
+    // setTimeout(() => {
+    // for (var ii = 0; ii < scenario.length; ii++) {
+                    if (scenario[ii][0] == 'system') {
+            systemMessage(scenario[ii][1]);
         } else {
-            userMessage(scenario[i][0], scenario[i][1]);
+            userMessage(scenario[ii][0], scenario[ii][1]);
         }
+    // }
 
-        lastUserName = scenario[i][0];
-        i++;
-        if (i >= scenario.length) {
-            clearInterval(int);
-        }
-    }, Math.floor(Math.random() * 500 + 300));
+    // }, 500);
+
+
+    lastUserName = scenario[ii][0];
+    ii++;
+    if (ii >= scenario.length) {
+        clearInterval(int);
+    }
+    }, 1000);
     // }
 
 
@@ -116,7 +123,7 @@ function userMessage(user, message) {
         }
     } else {
         if (message.split('.')[1] == 'png') {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
         } else {
             $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
         }

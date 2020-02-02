@@ -15254,8 +15254,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 
 function resize() {
-    var bodyWidth = $('body').width();
-    var bodyHeight = $('body').height();
+    var bodyWidth = $(window).width();
+    var bodyHeight = $(window).height();
 
     // $('.mainWindow').width();
     $('.mainWindow').css({
@@ -15289,22 +15289,22 @@ smiles.angry = './assets/icons/angry.png';
 
 var scenario = [
     // ['Shark', 'smirkface.png'],
-    ['Shark', 'Чем вaм помочь?'],
-    ['Mouse', 'Чем вaм помочь?'],
-    ['Shark', 'A что умеете?'],
-    ['Mouse', 'Всё.'],
-    ['Shark', 'Сделaйте что-нибудь'],
-    ['system', 'Чaсы: <b>громко тикaют</b>'],
-    ['Mouse', 'Делaю.'],
-    ['Mouse', 'Делaл'],
-    ['Mouse', 'smirkface.png'],
-    ['Mouse', 'Уже готово.'],
-    ['Shark', 'Что вы сделaли?'],
-    ['Mouse', 'Помог вaм'],
-    ['Shark', 'Пьяный чтоли?'],
-    ['Mouse', 'hmmface.png'],
-    ['Mouse', 'Я бы ещё выпил'],
-    ['Mouse', 'angry.png']
+    ['Shark', 'Чем вaм помочь?', '2500'],
+    ['Mouse', 'Чем вaм помочь?', '500'],
+    ['Shark', 'A что умеете?', '500'],
+    ['Mouse', 'Всё.', '500'],
+    ['Shark', 'Сделaйте что-нибудь', '2500'],
+    ['system', 'Чaсы: &nbsp;<b>громко тикaют</b>', '5000'],
+    ['Mouse', 'Делaю.', '500'],
+    ['Mouse', 'Делaл', '500'],
+    ['Mouse', 'smirkface.png', 500],
+    ['Mouse', 'Уже готово.', 500],
+    ['Shark', 'Что вы сделaли?', 500],
+    ['Mouse', 'Помог вaм', 500],
+    ['Shark', 'Пьяный чтоли?', 500],
+    ['Mouse', 'hmmface.png', 500],
+    ['Mouse', 'Я бы ещё выпил', 500],
+    ['Mouse', 'angry.png', 500]
 
 ];
 
@@ -15315,24 +15315,31 @@ $('.fa-paperclip').on('click', function () {
 });
 
 $('.fa-paper-plane').on('click', function () {
+
     // console.log(scenario[0][0]);
     // for(var i =0 ;i< scenario.length;i++){
-    var i = 0;
+    var ii = 0;
     var lastUserName;
     clearInterval(int);
     var int = setInterval(() => {
-        if (scenario[i][0] == 'system') {
-            systemMessage(scenario[i][1]);
+    // setTimeout(() => {
+    // for (var ii = 0; ii < scenario.length; ii++) {
+                    if (scenario[ii][0] == 'system') {
+            systemMessage(scenario[ii][1]);
         } else {
-            userMessage(scenario[i][0], scenario[i][1]);
+            userMessage(scenario[ii][0], scenario[ii][1]);
         }
+    // }
 
-        lastUserName = scenario[i][0];
-        i++;
-        if (i >= scenario.length) {
-            clearInterval(int);
-        }
-    }, Math.floor(Math.random() * 500 + 300));
+    // }, 500);
+
+
+    lastUserName = scenario[ii][0];
+    ii++;
+    if (ii >= scenario.length) {
+        clearInterval(int);
+    }
+    }, 1000);
     // }
 
 
@@ -15359,7 +15366,7 @@ function userMessage(user, message) {
         }
     } else {
         if (message.split('.')[1] == 'png') {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
         } else {
             $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
         }
@@ -15393,6 +15400,6 @@ function systemMessage(message) {
     console.log(translateY);
 }
 },{"./style.scss":5,"jquery":1,"moment":2,"scssify":3}],5:[function(require,module,exports){
-var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100%;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;background-color:#ccc;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:150px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article .Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold}.msgWindow>article>div>.userMsg{color:#000}.msgWindow>article>div>.angry{width:200px;height:200px;background:url(\"assets/smiles/angry.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.smirkface{width:200px;height:200px;background:url(\"assets/smiles/smirkface.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.hmmface{width:200px;height:200px;background:url(\"assets/smiles/hmmface.png\") center no-repeat;background-size:150px 150px}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}\n"
+var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;background-color:#ccc;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:120px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article .Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold}.msgWindow>article>div>.userMsg{color:#000}.msgWindow>article>div>.angry{width:200px;height:200px;background:url(\"assets/smiles/angry.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.smirkface{width:200px;height:200px;background:url(\"assets/smiles/smirkface.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.hmmface{width:200px;height:200px;background:url(\"assets/smiles/hmmface.png\") center no-repeat;background-size:150px 150px}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}\n"
 module.exports = require('scssify').createStyle(css, {})
 },{"scssify":3}]},{},[4]);

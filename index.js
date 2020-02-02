@@ -2,9 +2,11 @@ var express = require('express');
 var app = module.exports = express();
 var http = require('http');
 var fs = require('fs');
+var colour = require('colour');
+
 var httpPORT =process.env.PORT || 3000;
 var httpServer = http.createServer(app).listen(httpPORT, function () {
-    console.log('HTTP Server Listener Started:'.bold, httpPORT);
+    console.log('HTTP Server Listener Started:'.bold.green, httpPORT);
 });
 
 
