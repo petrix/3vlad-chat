@@ -26,18 +26,18 @@ $('.currentTime').html(moment(new Date()).format('HH:mm'));
 
 var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
-    {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"*Машущий смайлик-гифка*"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"*Машущий смайлик-гифка*"},
-    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"*Смайлик с шампанским*"},
+    {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"waving.png"},
+    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"waving.png"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"champagne.png"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Даже в туалете!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Несмотря на пятницу, чатик рабочий."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
-    {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"*грустный смайлик*"},
-    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"*Два грустных смайлика*"},
-    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*8 грустных смайликов*"},
+    {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"sad.png"},
+    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"sad.png"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"sad_2.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Итак, главный вопрос на повестке дня."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Коллеги, нас с вами ждет открытие нового магазина!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"У кого есть настроение свалить из Киева в командировку?"},
@@ -68,7 +68,7 @@ var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Встречайте нашего нового акционера!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"И нового супергероя!"},
     {"userAlias":"КГ","userValue":"Карен Галустян",	                    "message":"А из какой он страны?"},
-    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Азербайджан *флажок*"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"flag.png"},
     {"userAlias":"system","userValue":"system",	                        "message":"Карен Галустян покинул чат."},
     {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Ребят, добавьте в чат регионалов!"},
     {"userAlias":"system","userValue":"system",	                        "message":"Николай Азаров добавлен в чат."},
@@ -87,15 +87,15 @@ var scenario = [
     {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Вы не тех регионалов в чат добавили!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Это у нас «чат» глючит."},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Да, это проблемы с сервером."},
-    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем -ЭТО НЕВОЗМОЖНО*"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"impossible_meme.png"},
     {"userAlias":"ОК","userValue":"Отдел продаж КИЕВ",		            "message":"Ребята, пришлите новые модели Айфонов в магазин на Крещатике!"},
     {"userAlias":"ОП","userValue":"Отдел продаж Пырятын",		        "message":"Вышлите модели телефонов с фонариками в Пырятын!"},
     {"userAlias":"ОП","userValue":"Отдел продаж Пырятын",		        "message":"У нас на улице света нет! Модели с фонариками заканчиваются!"},
-    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем -ЭТО НЕВОЗМОЖНО*"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"impossible_meme.png"},
     {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"Кто потратил «золотую овацию» отправив менеджера за пивом?"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Ахаха, смешно!"},
     {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Не смешно, это не нормально!"},
-    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем – ЭТО НОРМА*"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"norma_meme.png"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Ребята, завтра все будут на корпоративе?"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Да!"},
     {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",	    "message":"Да!"},
@@ -126,6 +126,7 @@ $('.fa-paper-plane').on('click', function () {
         lastUserName = scenario[ii].userValue;
         ii++;
         if (ii >= scenario.length) {
+            // if (ii >= 4) {
             clearInterval(int);
         }
     }, 1000);
