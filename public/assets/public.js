@@ -111,14 +111,16 @@ var scenario = [
     ];
 
 $('.fa-paperclip').on('click', function () {
-    userMessage('GB','Gorbunov', 'new Date().getTime()');
+    clearInterval(int);
+    // userMessage('GB','Gorbunov', 'new Date().getTime()');
 });
 var ii;
+var int;
 $('.fa-paper-plane').on('click', function () {
     ii = 0;
-    var lastUserName;
+    // var lastUserName;
     clearInterval(int);
-    var int = setInterval(() => {
+    int = setInterval(() => {
 
         if (scenario[ii].userAlias == 'system') {
             systemMessage(scenario[ii].message);
@@ -193,7 +195,7 @@ function userMessage(userID, user, message) {
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
-    console.log(encodeURIComponent(userID));
+    console.log(user);
     lastUserName = user;
 }
 
@@ -206,11 +208,12 @@ function systemMessage(message) {
     var aricleClass = new Date().getTime();
     $('.msgWindow').append('<div class="'  +aricleClass + ' systemMessage">' + message + '</div>');
     var currentHeight = $('.' + aricleClass).height();
-    console.log('currentHeight', currentHeight);
+    // console.log('currentHeight', currentHeight);
     var translateVar = translateY - currentHeight - translateMessageStep;
     translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
+    lastUserName == "system";
     console.log(translateY);
 }
