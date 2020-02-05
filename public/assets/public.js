@@ -7,13 +7,17 @@ moment.locale('uk');
 if (window.File && window.FileReader && window.FileList && window.Blob) {} else {
     alert('The File APIs are not fully supported in this browser.');
 }
-var translateY = $(window).height();
+// var translateY = $(window).height();
+var translateY = $('.mainWindow').height();
+$('.mainWindow').height($(window).width()/2.4);
 function resize() {
-    var bodyWidth = $(window).width();
+    // var bodyWidth = $(window).width();
     var bodyHeight = $(window).height();
-    translateY = $(window).height();
-    $('.mainWindow').width(bodyWidth);
-    $('.mainWindow').height(bodyHeight);
+    translateY = $('.mainWindow').height();
+    // console.log(bodyWidth/bodyHeight);
+    $('.mainWindow').width($(window).width());
+    $('.mainWindow').height($(window).width()/2.4);
+    $('.sendMsgWindow').css({'bottom':($(window).height()-$(window).width()/2.4)/2+'px'})
     $('.msgWindow').children().remove();
     ii = 0; 
 }
@@ -22,7 +26,7 @@ resize();
 $(window).on('resize', resize);
 // var translateY = $(window).height();
 // console.log(translateY);
-var translateMessageStep = 120;
+var translateMessageStep = 100;
 var translateSysStep = 80;
 $('.currentTime').html(moment(new Date()).format('HH:mm'));
 
