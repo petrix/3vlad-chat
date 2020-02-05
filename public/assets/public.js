@@ -14,6 +14,8 @@ function resize() {
     translateY = $(window).height();
     $('.mainWindow').width(bodyWidth);
     $('.mainWindow').height(bodyHeight);
+    $('.msgWindow').children().remove();
+    ii = 0; 
 }
 resize();
 
@@ -27,7 +29,7 @@ $('.currentTime').html(moment(new Date()).format('HH:mm'));
 var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
     {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"waving.png"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"waving.png"},
+    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"dance.png"},
     {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"champagne.png"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
@@ -36,8 +38,8 @@ var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
     {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"sad.png"},
-    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"sad.png"},
-    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"sad_2.png"},
+    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"sad2.png"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"sad8.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Итак, главный вопрос на повестке дня."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Коллеги, нас с вами ждет открытие нового магазина!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"У кого есть настроение свалить из Киева в командировку?"},
@@ -111,9 +113,9 @@ var scenario = [
 $('.fa-paperclip').on('click', function () {
     userMessage('GB','Gorbunov', 'new Date().getTime()');
 });
-
+var ii;
 $('.fa-paper-plane').on('click', function () {
-    var ii = 0;
+    ii = 0;
     var lastUserName;
     clearInterval(int);
     var int = setInterval(() => {
@@ -126,7 +128,7 @@ $('.fa-paper-plane').on('click', function () {
         lastUserName = scenario[ii].userValue;
         ii++;
         if (ii >= scenario.length) {
-            // if (ii >= 4) {
+            // if (ii >= 13) {
             clearInterval(int);
         }
     }, 1000);
@@ -160,7 +162,7 @@ $('.fa-paper-plane').on('click', function () {
 
 
 $('.fa-smile').on('click', function () {
-    systemMessage('Иди нахуй');
+    systemMessage('Системное сообщение');
 });
 var lastUserName;
 
