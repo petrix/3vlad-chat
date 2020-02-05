@@ -7,19 +7,18 @@ moment.locale('uk');
 if (window.File && window.FileReader && window.FileList && window.Blob) {} else {
     alert('The File APIs are not fully supported in this browser.');
 }
-var translateY = $(window).height();
+
 function resize() {
     var bodyWidth = $(window).width();
     var bodyHeight = $(window).height();
-    translateY = $(window).height();
     $('.mainWindow').width(bodyWidth);
     $('.mainWindow').height(bodyHeight);
 }
 resize();
 
 $(window).on('resize', resize);
-// var translateY = $(window).height();
-// console.log(translateY);
+var translateY = $(window).height();
+console.log(translateY);
 var translateMessageStep = 120;
 var translateSysStep = 80;
 $('.currentTime').html(moment(new Date()).format('HH:mm'));
@@ -159,7 +158,7 @@ $('.fa-paper-plane').on('click', function () {
 
 
 $('.fa-smile').on('click', function () {
-    systemMessage('Иди нахуй');
+    systemMessage('<b>Иди нахуй</b>');
 });
 var lastUserName;
 
@@ -178,9 +177,9 @@ function userMessage(userID, user, message) {
         }
     } else {
         if (message.split('.')[1] == 'png') {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon">'+userID+'</div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
         } else {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon">'+userID+'</div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
         }
     }
 
@@ -190,7 +189,7 @@ function userMessage(userID, user, message) {
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
-    console.log(encodeURIComponent(userID));
+    console.log(translateY);
     lastUserName = user;
 }
 
@@ -201,7 +200,7 @@ function systemMessage(message) {
     audioElement.load();
     audioElement.play();
     var aricleClass = new Date().getTime();
-    $('.msgWindow').append('<div class="'  +aricleClass + ' systemMessage">' + message + '</div>');
+    $('.msgWindow').append('<div class=' + aricleClass + '>' + message + '</div>');
     var currentHeight = $('.' + aricleClass).height();
     console.log('currentHeight', currentHeight);
     var translateVar = translateY - currentHeight - translateMessageStep;

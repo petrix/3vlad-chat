@@ -15247,112 +15247,167 @@ var $ = require('jquery');
 
 var moment = require('moment');
 moment.locale('uk');
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-    // Great success! All the File APIs are supported.
-} else {
+if (window.File && window.FileReader && window.FileList && window.Blob) {} else {
     alert('The File APIs are not fully supported in this browser.');
 }
-
+var translateY = $(window).height();
 function resize() {
     var bodyWidth = $(window).width();
     var bodyHeight = $(window).height();
-
-    // $('.mainWindow').width();
-    $('.mainWindow').css({
-        transform: 'scale(' + bodyWidth / 1920 + ')'
-    });
-    // console.log(mainWindowWidth,mainWindowHeight);
-    // $('.mainWindow').height() = $('.mainWindow').width()/1.77;
+    translateY = $(window).height();
+    $('.mainWindow').width(bodyWidth);
+    $('.mainWindow').height(bodyHeight);
 }
 resize();
 
 $(window).on('resize', resize);
-var translateY = 1000;
-var translateMessageStep = 220;
+// var translateY = $(window).height();
+// console.log(translateY);
+var translateMessageStep = 120;
 var translateSysStep = 80;
 $('.currentTime').html(moment(new Date()).format('HH:mm'));
-// var userArray = [Gorbunov,Mouse,Shark];
-var users = {};
-users.Gorbunov = {};
-users.Gorbunov.name = 'Gorbunov';
-users.Gorbunov.icon = './assets/users/user_gorbunov.jpg';
-users.Mouse = {};
-users.Mouse.name = 'Mouse';
-users.Mouse.icon = './assets/users/user_mouse.png';
-users.Shark = {};
-users.Shark.name = 'Shark';
-users.Shark.icon = './assets/users/user_shark.png';
-console.log(users);
-var smiles = {};
-smiles.angry = './assets/icons/angry.png';
-
 
 var scenario = [
-    // ['Shark', 'smirkface.png'],
-    ['Shark', 'Чем вaм помочь?', '2500'],
-    ['Mouse', 'Чем вaм помочь?', '500'],
-    ['Shark', 'A что умеете?', '500'],
-    ['Mouse', 'Всё.', '500'],
-    ['Shark', 'Сделaйте что-нибудь', '2500'],
-    ['system', 'Чaсы: &nbsp;<b>громко тикaют</b>', '5000'],
-    ['Mouse', 'Делaю.', '500'],
-    ['Mouse', 'Делaл', '500'],
-    ['Mouse', 'smirkface.png', 500],
-    ['Mouse', 'Уже готово.', 500],
-    ['Shark', 'Что вы сделaли?', 500],
-    ['Mouse', 'Помог вaм', 500],
-    ['Shark', 'Пьяный чтоли?', 500],
-    ['Mouse', 'hmmface.png', 500],
-    ['Mouse', 'Я бы ещё выпил', 500],
-    ['Mouse', 'angry.png', 500]
-
-];
-
-
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
+    {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"*Машущий смайлик-гифка*"},
+    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"*Машущий смайлик-гифка*"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"*Смайлик с шампанским*"},
+    {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
+    {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
+    {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Даже в туалете!"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Несмотря на пятницу, чатик рабочий."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
+    {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"*грустный смайлик*"},
+    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"*Два грустных смайлика*"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*8 грустных смайликов*"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Итак, главный вопрос на повестке дня."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Коллеги, нас с вами ждет открытие нового магазина!"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"У кого есть настроение свалить из Киева в командировку?"},
+    {"userAlias":"СО","userValue":"Сергей ОТДЕЛ ПРОДАЖ",	            "message":"У меня!"},
+    {"userAlias":"ВО","userValue":"Валерий ОТДЕЛ ПРОДАЖ",	            "message":"Я хочу!"},
+    {"userAlias":"КО","userValue":"Константин ОТДЕЛ ПРОДАЖ",	        "message":"Можно я поеду?"},
+    {"userAlias":"ЕО","userValue":"Евгений ОТДЕЛ ПРОДАЖ",	            "message":"У меня уже собрана сумка."},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Я на ЖД, куда ехать?"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Новый магазин будет открываться в пгт. Черный Папоротник."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Старозабытого района" },
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Луганской области."},
+    {"userAlias":"СО","userValue":"Сергей ОТДЕЛ ПРОДАЖ",	            "message":"Я не могу, у меня теща приезжает. Я ее очень люблю."},
+    {"userAlias":"ВО","userValue":"Валерий ОТДЕЛ ПРОДАЖ",	            "message":"Я заболел. Если надо принесу больничный."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Константин ОТДЕЛ ПРОДАЖ удалился из чата."},
+    {"userAlias":"ЕО","userValue":"Евгений ОТДЕЛ ПРОДАЖ",	            "message":"У меня украли сумку. Только что."},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"ЖД заминировали. Все поезда отменили."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Жаль... За открытие полагается премия в размере двух окладов."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Желающих все-таки нет?"},
+    {"userAlias":"СО","userValue":"Сергей ОТДЕЛ ПРОДАЖ",	            "message":"Я!"},
+    {"userAlias":"ВО","userValue":"Валерий ОТДЕЛ ПРОДАЖ",	            "message":"Я!"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Константин ОТДЕЛ ПРОДАЖ вернулся в чат."},
+    {"userAlias":"КО","userValue":"Константин ОТДЕЛ ПРОДАЖ",	        "message":"Я!"},
+    {"userAlias":"ЕО","userValue":"Евгений ОТДЕЛ ПРОДАЖ",	            "message":"Я!"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Я! Я уже в городе! "},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"На какой улице будет магазин?"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Тут их просто две."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Денис «Бэтмен» Поздняков добавил в чат МЕЛИК-МАМЕД."},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Встречайте нашего нового акционера!"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"И нового супергероя!"},
+    {"userAlias":"КГ","userValue":"Карен Галустян",	                    "message":"А из какой он страны?"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Азербайджан *флажок*"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Карен Галустян покинул чат."},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Ребят, добавьте в чат регионалов!"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Николай Азаров добавлен в чат."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Виктор Янукович добавлен в чат."},
+    {"userAlias":"НА","userValue":"Николай Азаров",		                "message":"Здоровеньки були!"},
+    {"userAlias":"НА","userValue":"Николай Азаров",		                "message":"Всем привет от ригионалов!"},
+    {"userAlias":"НА","userValue":"Николай Азаров",		                "message":"Витя, ты где?"},
+    {"userAlias":"ВЯ","userValue":"Виктор Янукович",		            "message":"Я тут!"},
+    {"userAlias":"ВЯ","userValue":"Виктор Янукович",		            "message":"Не могу увимк..."},
+    {"userAlias":"ВЯ","userValue":"Виктор Янукович",		            "message":"Не могу увикнмнм..."},
+    {"userAlias":"ВЯ","userValue":"Виктор Янукович",		            "message":"Уивнкнмнмуты..."},
+    {"userAlias":"ВЯ","userValue":"Виктор Янукович",		            "message":"Не могу увимкнуты оповещения!"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Виктора Януковича удалили из чата."},
+    {"userAlias":"НА","userValue":"Николай Азаров",		                "message":"Витя, куда ты ушел?"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Николай Азарова удалили из чата."},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Вы не тех регионалов в чат добавили!"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Это у нас «чат» глючит."},
+    {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Да, это проблемы с сервером."},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем -ЭТО НЕВОЗМОЖНО*"},
+    {"userAlias":"ОК","userValue":"Отдел продаж КИЕВ",		            "message":"Ребята, пришлите новые модели Айфонов в магазин на Крещатике!"},
+    {"userAlias":"ОП","userValue":"Отдел продаж Пырятын",		        "message":"Вышлите модели телефонов с фонариками в Пырятын!"},
+    {"userAlias":"ОП","userValue":"Отдел продаж Пырятын",		        "message":"У нас на улице света нет! Модели с фонариками заканчиваются!"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем -ЭТО НЕВОЗМОЖНО*"},
+    {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"Кто потратил «золотую овацию» отправив менеджера за пивом?"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Ахаха, смешно!"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"Не смешно, это не нормально!"},
+    {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"*Мем – ЭТО НОРМА*"},
+    {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Ребята, завтра все будут на корпоративе?"},
+    {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Да!"},
+    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",	    "message":"Да!"},
+    {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я вам из отпуска подарки везу!"},
+    {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"А где ты был?"},
+    {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"В Китае!"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Лена Белогородько КОММЕРЦИЯ удалилась из чата."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ удалился из чата."},
+    {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я немного кашляю, но выпью терафлю и буду в порядке!"},
+    {"userAlias":"system","userValue":"system",	                        "message":"Денис «Бэтмен» Поздняков удалил чат."}
+    ];
 
 $('.fa-paperclip').on('click', function () {
-    userMessage('Gorbunov', 'new Date().getTime()');
+    userMessage('GB','Gorbunov', 'new Date().getTime()');
 });
 
 $('.fa-paper-plane').on('click', function () {
-
-    // console.log(scenario[0][0]);
-    // for(var i =0 ;i< scenario.length;i++){
     var ii = 0;
     var lastUserName;
     clearInterval(int);
     var int = setInterval(() => {
-    // setTimeout(() => {
-    // for (var ii = 0; ii < scenario.length; ii++) {
-                    if (scenario[ii][0] == 'system') {
-            systemMessage(scenario[ii][1]);
+
+        if (scenario[ii].userAlias == 'system') {
+            systemMessage(scenario[ii].message);
         } else {
-            userMessage(scenario[ii][0], scenario[ii][1]);
+            userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
         }
-    // }
-
-    // }, 500);
-
-
-    lastUserName = scenario[ii][0];
-    ii++;
-    if (ii >= scenario.length) {
-        clearInterval(int);
-    }
+        lastUserName = scenario[ii].userValue;
+        ii++;
+        if (ii >= scenario.length) {
+            clearInterval(int);
+        }
     }, 1000);
-    // }
-
-
 });
 
+
+
+
+// $('.fa-paper-plane').on('click', function () {
+//     var ii = 0;
+//     var lastUserName;
+//     clearInterval(int);
+//     var int = setInterval(() => {
+//         if (scenario[ii][0] == 'system') {
+//             systemMessage(scenario[ii][1]);
+//         } else {
+//             userMessage(scenario[ii][0], scenario[ii][1]);
+//         }
+//         lastUserName = scenario[ii][0];
+//         ii++;
+//         if (ii >= scenario.length) {
+//             clearInterval(int);
+//         }
+//     }, 1000);
+// });
+
+
+
+
+
+
+
 $('.fa-smile').on('click', function () {
-    systemMessage('<b>Иди нахуй</b>');
+    systemMessage('Иди нахуй');
 });
 var lastUserName;
 
-function userMessage(user, message) {
+function userMessage(userID, user, message) {
 
-    // console.log(message.split('.')[1]);
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', './assets/new_message_sound.mp3');
     audioElement.load();
@@ -15366,19 +15421,19 @@ function userMessage(user, message) {
         }
     } else {
         if (message.split('.')[1] == 'png') {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon">'+userID+'</div><div><div class="userName">' + user + '</div><div class="userMsg ' + message.split('.')[0] + '"></div></div></article>');
         } else {
-            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon ' + user + '"></div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
+            $('.msgWindow').append('<article class=' + aricleClass + '><div class="userIcon">'+userID+'</div><div><div class="userName">' + user + '</div><div class="userMsg">' + message + '</div></div></article>');
         }
     }
 
     var currentHeight = $('.' + aricleClass).height();
-    var translateVar = translateY - currentHeight - 220;
+    var translateVar = translateY - currentHeight - translateMessageStep;
     translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
     }, 100);
-    console.log(translateY);
+    console.log(encodeURIComponent(userID));
     lastUserName = user;
 }
 
@@ -15389,10 +15444,10 @@ function systemMessage(message) {
     audioElement.load();
     audioElement.play();
     var aricleClass = new Date().getTime();
-    $('.msgWindow').append('<div class=' + aricleClass + '>' + message + '</div>');
+    $('.msgWindow').append('<div class="'  +aricleClass + ' systemMessage">' + message + '</div>');
     var currentHeight = $('.' + aricleClass).height();
     console.log('currentHeight', currentHeight);
-    var translateVar = translateY - currentHeight - 220;
+    var translateVar = translateY - currentHeight - translateMessageStep;
     translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
         'transform': 'translate(0px,' + translateVar + 'px)'
@@ -15400,6 +15455,6 @@ function systemMessage(message) {
     console.log(translateY);
 }
 },{"./style.scss":5,"jquery":1,"moment":2,"scssify":3}],5:[function(require,module,exports){
-var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;background-color:#ccc;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:120px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article .Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.msgWindow>article .Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold}.msgWindow>article>div>.userMsg{color:#000}.msgWindow>article>div>.angry{width:200px;height:200px;background:url(\"assets/smiles/angry.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.smirkface{width:200px;height:200px;background:url(\"assets/smiles/smirkface.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.hmmface{width:200px;height:200px;background:url(\"assets/smiles/hmmface.png\") center no-repeat;background-size:150px 150px}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}\n"
+var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;overflow:hidden;background:url(\"./assets/grunge_BG.png\") center no-repeat;background-size:cover}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#57518e;width:100%;height:65px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>i{font-size:120px;padding:0 10px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:120px;width:100%;background:linear-gradient(0deg, #57518e, #57518e 35%, #6861ad 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:50px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>div{display:flex;justify-content:center;align-items:center;height:70px;margin:10px 0;font-size:30px}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-color:#c52429;background-size:auto 100%;border-radius:20px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2);display:flex;justify-content:center;align-items:center;font-size:100px}.msgWindow>article>.userPlace{width:200px}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#250506;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2)}.msgWindow>article>div>.userName{font-weight:bold;color:#c52429}.msgWindow>article>div>.userMsg{color:#fff}.msgWindow>article>div>.angry{width:200px;height:200px;background:url(\"assets/smiles/angry.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.smirkface{width:200px;height:200px;background:url(\"assets/smiles/smirkface.png\") center no-repeat;background-size:150px 150px}.msgWindow>article>div>.hmmface{width:200px;height:200px;background:url(\"assets/smiles/hmmface.png\") center no-repeat;background-size:150px 150px}.msgWindow>.systemMessage{background-color:#250506;color:#fff;border-radius:20px}.sendMsgWindow{padding:0 20px;width:100%;height:100px;background-color:#fff;bottom:0;position:absolute;display:flex;align-items:center;justify-content:space-between;color:#aaa}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#aaa;width:100%;margin:0 10px;font-size:50px;border:2px solid #aaa;border-radius:50px;padding:0 30px}.Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.yanukovich{background:url(\"assets/users/user_yanukovich.jpg\") center no-repeat;background-size:auto 100%}\n"
 module.exports = require('scssify').createStyle(css, {})
 },{"scssify":3}]},{},[4]);

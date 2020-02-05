@@ -76,9 +76,10 @@ body {
     height: 1080px;
     // width: 100%;
     // height: 100vh;
-    background-color: #ccc;
+    // background-color: #ccc;
     overflow: hidden;
-
+background: url('./assets/grunge_BG.png')center no-repeat;
+background-size: cover;
 }
 
 .header {
@@ -179,22 +180,29 @@ body {
             width: 200px;
             height: 200px;
             // background: url('assets/users/gorbunov.jpg') center no-repeat;
+            background-color: #c52429;
             background-size: auto 100%;
             border-radius: 20px;
             box-shadow: 5px 5px 5px 0 rgba($color: #000000, $alpha: 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            // font-weight: bold;
+        
         }
-        .Shark{
-            background: url('assets/users/user_shark.png') center no-repeat;
-            background-size: auto 100%;
-        }
-        .Mouse{
-            background: url('assets/users/user_mouse.png') center no-repeat;
-            background-size: auto 100%;
-        }
-        .Gorbunov{
-            background: url('assets/users/user_gorbunov.jpg') center no-repeat;
-            background-size: auto 100%;
-        }
+        // .Shark{
+        //     background: url('assets/users/user_shark.png') center no-repeat;
+        //     background-size: auto 100%;
+        // }
+        // .Mouse{
+        //     background: url('assets/users/user_mouse.png') center no-repeat;
+        //     background-size: auto 100%;
+        // }
+        // .Gorbunov{
+        //     background: url('assets/users/user_gorbunov.jpg') center no-repeat;
+        //     background-size: auto 100%;
+        // }
         &>.userPlace {
             width: 200px;
         }
@@ -202,7 +210,7 @@ body {
         &>div {
             border-radius: 0 20px 20px 20px;
             margin: 0 20px;
-            background-color: #fff;
+            background-color: #250506;
             // border: 2px solid #fff;
             padding: 0 20px;
             font-size: 50px;
@@ -210,11 +218,12 @@ body {
 
             &>.userName {
                 font-weight: bold;
+                color: #c52429;
             }
 
             &>.userMsg {
 
-                color: #000;
+                color: #fff;
             }
             &>.angry{
                 width: 200px;
@@ -237,7 +246,11 @@ body {
         }
     }
 
-    &>.systemMessage {}
+    &>.systemMessage {
+        background-color: #250506;
+        color: #fff;
+    border-radius: 20px;
+    }
 }
 
 .sendMsgWindow {
@@ -275,3 +288,21 @@ body {
 //     background-size: auto 100%;
 //     position: absolute;
 //   }
+
+
+.Shark{
+    background: url('assets/users/user_shark.png') center no-repeat;
+    background-size: auto 100%;
+}
+.Mouse{
+    background: url('assets/users/user_mouse.png') center no-repeat;
+    background-size: auto 100%;
+}
+.Gorbunov{
+    background: url('assets/users/user_gorbunov.jpg') center no-repeat;
+    background-size: auto 100%;
+}
+.yanukovich{
+    background: url('assets/users/user_yanukovich.jpg') center no-repeat;
+    background-size: auto 100%;
+}
