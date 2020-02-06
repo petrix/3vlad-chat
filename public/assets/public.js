@@ -19,13 +19,16 @@ if (lang.indexOf('_') !== -1)
 console.log(lang);
 
 // var translateY = $(window).height();
-$('.mainWindow').width($(window).width());
-var translateY = $('.mainWindow').height();
+// $('.mainWindow').width($(window).width());
+// var translateY = $('.mainWindow').height();
 
-$('.mainWindow').height($(window).width()/2.4);
+// $('.mainWindow').height($(window).width()/2.4);
 function resize() {
+    $('.mainWindow').width($(window).width());
+    $('.mainWindow').height($(window).width()/2.4);
+
     // var bodyWidth = $(window).width();
-    var bodyHeight = $(window).height();
+    // var bodyHeight = $(window).height();
     translateY = $('.mainWindow').height();
     // console.log(bodyWidth/bodyHeight);
     $('.mainWindow').width($(window).width());
@@ -213,7 +216,6 @@ function systemMessage(message) {
     var aricleClass = new Date().getTime();
     $('.msgWindow').append('<div class="'  +aricleClass + ' systemMessage">' + message + '</div>');
     var currentHeight = $('.' + aricleClass).height();
-    // console.log('currentHeight', currentHeight);
     var translateVar = translateY - currentHeight - translateMessageStep;
     translateY = translateY - currentHeight - 10;
     $('.msgWindow').css({
@@ -228,7 +230,7 @@ var voiceSelect = document.querySelector('select');
 
 function populateVoiceList() {
     voices = synth.getVoices().sort(function (a, b) {
-      console.log(a, b);
+    //   console.log(a, b);
   
       const aname = a.name.toUpperCase(),
         bname = b.name.toUpperCase();
@@ -239,7 +241,7 @@ function populateVoiceList() {
     var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
     voiceSelect.innerHTML = '';
     for (i = 0; i < voices.length; i++) {
-      console.log(voices[i].lang);
+    //   console.log(voices[i].lang);
       if (voices[i].lang === 'ru-RU') {
   var option = document.createElement('option');
         option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
@@ -247,10 +249,6 @@ function populateVoiceList() {
       option.setAttribute('data-name', voices[i].name);
           voiceSelect.appendChild(option);
       }
-  
-      // if(voices[i].default) {
-      //   option.textContent += ' -- DEFAULT';
-      // }
     }
     voiceSelect.selectedIndex = selectedIndex;
   }
@@ -272,7 +270,6 @@ function speak(inputTxt) {
         console.log( event.elapsedTime + ' milliseconds.');
         voiceEndCallback();
       }
-    // utterThis.onend =  voiceEndCallback;
     
       utterThis.onerror = function (event) {
         console.error('SpeechSynthesisUtterance.onerror');
@@ -284,9 +281,10 @@ function speak(inputTxt) {
           break;
         }
       }
-      utterThis.pitch = 0.1;
-      utterThis.rate = 1;
-      utterThis.volume = 0.4;
+      utterThis.pitch = 0.5;
+      utterThis.rate = 1.3;
+      utterThis.lang = "ru-RU";
+      utterThis.volume = 0.5;
       synth.speak(utterThis);
     }
   }
