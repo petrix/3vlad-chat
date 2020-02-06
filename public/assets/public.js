@@ -7,8 +7,21 @@ moment.locale('uk');
 if (window.File && window.FileReader && window.FileList && window.Blob) {} else {
     alert('The File APIs are not fully supported in this browser.');
 }
+
+var synth = window.speechSynthesis;
+
+var lang = window.navigator.languages ? window.navigator.languages[0] : null;
+    lang = lang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
+if (lang.indexOf('-') !== -1)
+    lang = lang.split('-')[0];
+if (lang.indexOf('_') !== -1)
+    lang = lang.split('_')[0];
+console.log(lang);
+
 // var translateY = $(window).height();
+$('.mainWindow').width($(window).width());
 var translateY = $('.mainWindow').height();
+
 $('.mainWindow').height($(window).width()/2.4);
 function resize() {
     // var bodyWidth = $(window).width();
@@ -115,57 +128,45 @@ var scenario = [
     ];
 
 $('.fa-paperclip').on('click', function () {
-    clearInterval(int);
+    // clearInterval(int);
     // userMessage('GB','Gorbunov', 'new Date().getTime()');
 });
 var ii;
 var int;
 $('.fa-paper-plane').on('click', function () {
-    ii = 0;
-    // var lastUserName;
-    clearInterval(int);
-    int = setInterval(() => {
 
-        if (scenario[ii].userAlias == 'system') {
-            systemMessage(scenario[ii].message);
-        } else {
-            userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
-        }
-        lastUserName = scenario[ii].userValue;
-        ii++;
-        if (ii >= scenario.length) {
-            // if (ii >= 13) {
-            clearInterval(int);
-        }
-    }, 1000);
+    ii = 0;
+    // clearTimeout(int);
+firstCicle();
 });
 
+    function firstCicle() {
 
+        function voiceStartCallback() {
+            console.log("Voice started");
+        }
+         
+        var parameters = {
+            onstart: voiceStartCallback,
+            onend: voiceEndCallback
+        }
 
+        if (scenario[ii].userAlias == 'system') {
 
-// $('.fa-paper-plane').on('click', function () {
-//     var ii = 0;
-//     var lastUserName;
-//     clearInterval(int);
-//     var int = setInterval(() => {
-//         if (scenario[ii][0] == 'system') {
-//             systemMessage(scenario[ii][1]);
-//         } else {
-//             userMessage(scenario[ii][0], scenario[ii][1]);
-//         }
-//         lastUserName = scenario[ii][0];
-//         ii++;
-//         if (ii >= scenario.length) {
-//             clearInterval(int);
-//         }
-//     }, 1000);
-// });
+            systemMessage(scenario[ii].message);
+            speak(scenario[ii].message);
+        } else {
 
-
-
-
-
-
+            userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
+            speak(scenario[ii].message);
+        }
+    } 
+        function voiceEndCallback() {
+            console.log("Voice ended");
+            lastUserName = scenario[ii].userValue;
+            ii++;
+            firstCicle();
+        }
 
 $('.fa-smile').on('click', function () {
     systemMessage('Системное сообщение');
@@ -221,3 +222,71 @@ function systemMessage(message) {
     lastUserName == "system";
     console.log(translateY);
 }
+
+
+var voiceSelect = document.querySelector('select');
+
+function populateVoiceList() {
+    voices = synth.getVoices().sort(function (a, b) {
+      console.log(a, b);
+  
+      const aname = a.name.toUpperCase(),
+        bname = b.name.toUpperCase();
+      if (aname < bname) return -1;
+      else if (aname == bname) return 0;
+      else return +1;
+    });
+    var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
+    voiceSelect.innerHTML = '';
+    for (i = 0; i < voices.length; i++) {
+      console.log(voices[i].lang);
+      if (voices[i].lang === 'ru-RU') {
+  var option = document.createElement('option');
+        option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+            option.setAttribute('data-lang', voices[i].lang);
+      option.setAttribute('data-name', voices[i].name);
+          voiceSelect.appendChild(option);
+      }
+  
+      // if(voices[i].default) {
+      //   option.textContent += ' -- DEFAULT';
+      // }
+    }
+    voiceSelect.selectedIndex = selectedIndex;
+  }
+
+
+  populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+function speak(inputTxt) {
+    if (synth.speaking) {
+      console.error('speechSynthesis.speaking');
+      return;
+    }
+    if (inputTxt !== '') {
+      var utterThis = new SpeechSynthesisUtterance(inputTxt);
+      utterThis.onend = function (event) {
+        console.log( event.elapsedTime + ' milliseconds.');
+        voiceEndCallback();
+      }
+    // utterThis.onend =  voiceEndCallback;
+    
+      utterThis.onerror = function (event) {
+        console.error('SpeechSynthesisUtterance.onerror');
+      }
+      var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+      for (i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          utterThis.voice = voices[i];
+          break;
+        }
+      }
+      utterThis.pitch = 0.1;
+      utterThis.rate = 1;
+      utterThis.volume = 0.4;
+      synth.speak(utterThis);
+    }
+  }

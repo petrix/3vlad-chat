@@ -15250,8 +15250,21 @@ moment.locale('uk');
 if (window.File && window.FileReader && window.FileList && window.Blob) {} else {
     alert('The File APIs are not fully supported in this browser.');
 }
+
+var synth = window.speechSynthesis;
+
+var lang = window.navigator.languages ? window.navigator.languages[0] : null;
+    lang = lang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
+if (lang.indexOf('-') !== -1)
+    lang = lang.split('-')[0];
+if (lang.indexOf('_') !== -1)
+    lang = lang.split('_')[0];
+console.log(lang);
+
 // var translateY = $(window).height();
+$('.mainWindow').width($(window).width());
 var translateY = $('.mainWindow').height();
+
 $('.mainWindow').height($(window).width()/2.4);
 function resize() {
     // var bodyWidth = $(window).width();
@@ -15358,57 +15371,45 @@ var scenario = [
     ];
 
 $('.fa-paperclip').on('click', function () {
-    clearInterval(int);
+    // clearInterval(int);
     // userMessage('GB','Gorbunov', 'new Date().getTime()');
 });
 var ii;
 var int;
 $('.fa-paper-plane').on('click', function () {
-    ii = 0;
-    // var lastUserName;
-    clearInterval(int);
-    int = setInterval(() => {
 
-        if (scenario[ii].userAlias == 'system') {
-            systemMessage(scenario[ii].message);
-        } else {
-            userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
-        }
-        lastUserName = scenario[ii].userValue;
-        ii++;
-        if (ii >= scenario.length) {
-            // if (ii >= 13) {
-            clearInterval(int);
-        }
-    }, 1000);
+    ii = 0;
+    // clearTimeout(int);
+firstCicle();
 });
 
+    function firstCicle() {
 
+        function voiceStartCallback() {
+            console.log("Voice started");
+        }
+         
+        var parameters = {
+            onstart: voiceStartCallback,
+            onend: voiceEndCallback
+        }
 
+        if (scenario[ii].userAlias == 'system') {
 
-// $('.fa-paper-plane').on('click', function () {
-//     var ii = 0;
-//     var lastUserName;
-//     clearInterval(int);
-//     var int = setInterval(() => {
-//         if (scenario[ii][0] == 'system') {
-//             systemMessage(scenario[ii][1]);
-//         } else {
-//             userMessage(scenario[ii][0], scenario[ii][1]);
-//         }
-//         lastUserName = scenario[ii][0];
-//         ii++;
-//         if (ii >= scenario.length) {
-//             clearInterval(int);
-//         }
-//     }, 1000);
-// });
+            systemMessage(scenario[ii].message);
+            speak(scenario[ii].message);
+        } else {
 
-
-
-
-
-
+            userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
+            speak(scenario[ii].message);
+        }
+    } 
+        function voiceEndCallback() {
+            console.log("Voice ended");
+            lastUserName = scenario[ii].userValue;
+            ii++;
+            firstCicle();
+        }
 
 $('.fa-smile').on('click', function () {
     systemMessage('Системное сообщение');
@@ -15464,6 +15465,74 @@ function systemMessage(message) {
     lastUserName == "system";
     console.log(translateY);
 }
+
+
+var voiceSelect = document.querySelector('select');
+
+function populateVoiceList() {
+    voices = synth.getVoices().sort(function (a, b) {
+      console.log(a, b);
+  
+      const aname = a.name.toUpperCase(),
+        bname = b.name.toUpperCase();
+      if (aname < bname) return -1;
+      else if (aname == bname) return 0;
+      else return +1;
+    });
+    var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
+    voiceSelect.innerHTML = '';
+    for (i = 0; i < voices.length; i++) {
+      console.log(voices[i].lang);
+      if (voices[i].lang === 'ru-RU') {
+  var option = document.createElement('option');
+        option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+            option.setAttribute('data-lang', voices[i].lang);
+      option.setAttribute('data-name', voices[i].name);
+          voiceSelect.appendChild(option);
+      }
+  
+      // if(voices[i].default) {
+      //   option.textContent += ' -- DEFAULT';
+      // }
+    }
+    voiceSelect.selectedIndex = selectedIndex;
+  }
+
+
+  populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+function speak(inputTxt) {
+    if (synth.speaking) {
+      console.error('speechSynthesis.speaking');
+      return;
+    }
+    if (inputTxt !== '') {
+      var utterThis = new SpeechSynthesisUtterance(inputTxt);
+      utterThis.onend = function (event) {
+        console.log( event.elapsedTime + ' milliseconds.');
+        voiceEndCallback();
+      }
+    // utterThis.onend =  voiceEndCallback;
+    
+      utterThis.onerror = function (event) {
+        console.error('SpeechSynthesisUtterance.onerror');
+      }
+      var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+      for (i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          utterThis.voice = voices[i];
+          break;
+        }
+      }
+      utterThis.pitch = 0.1;
+      utterThis.rate = 1;
+      utterThis.volume = 0.4;
+      synth.speak(utterThis);
+    }
+  }
 },{"./style.scss":5,"jquery":1,"moment":2,"scssify":3}],5:[function(require,module,exports){
 var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-color:black;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;overflow:hidden;background:url(\"./assets/grunge_BG.png\") center no-repeat;background-size:cover}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#250506;width:100%;height:50px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>.logo{font-size:100px;padding:0 10px;background:url(\"assets/n2/logo.png\") center no-repeat;background-size:cover;width:180px;height:34px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:70px;width:100%;background:linear-gradient(0deg, #250506, #250506 55%, #520d0f 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:45px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-color:rgba(255,255,255,0.8);border:5px solid black;background-size:auto 100%;border-radius:50%;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2);display:flex;justify-content:center;align-items:center;font-size:100px}.msgWindow>article>.userPlace{width:200px;border:none}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:rgba(255,255,255,0.8);border:2px solid #000;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.5)}.msgWindow>article>div>.userName{font-weight:bold;color:#000}.msgWindow>article>div>.userMsg{color:#000;margin:20px;background-position-x:left}.msgWindow>.systemMessage{background-color:#250506;color:#fff;border-radius:20px;display:flex;justify-content:center;align-items:center;height:70px;margin:10px 100px;font-size:40px}.sendMsgWindow{padding:0 20px;width:100%;height:70px;background-color:#250506;bottom:0;z-index:900;position:fixed;display:flex;align-items:center;justify-content:center;color:#c52429}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#fff;width:85%;margin:0 10px;font-size:40px;border:2px solid #c52429;border-radius:50px;padding:0 30px;background-color:#c52429}.sendMsgWindow>input::placeholder{color:#fff}.Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.yanukovich{background:url(\"assets/users/user_yanukovich.jpg\") center no-repeat;background-size:auto 100%}.angry{width:150px;height:150px;background:url(\"assets/smiles/angry.png\") center repeat-x;background-size:150px 150px}.smirkface{width:150px;height:150px;background:url(\"assets/smiles/smirkface.png\") center repeat-x;background-size:150px 150px}.hmmface{width:150px;height:150px;background:url(\"assets/smiles/hmmface.png\") center repeat-x;background-size:150px 150px}.waving{width:150px;height:150px;background:url(\"assets/n2/waving.png\") center repeat-x;background-size:150px 150px}.champagne{width:150px;height:150px;background:url(\"assets/n2/champagne_sticker.png\") center repeat-x;background-size:150px 150px}.dance{width:150px;height:150px;background:url(\"assets/n2/dance.png\") center repeat-x;background-size:150px 150px}.flag{width:150px;height:150px;background:url(\"assets/n2/flag.png\") center repeat-x;background-size:150px 150px}.norma_meme{width:250px;height:250px;background:url(\"assets/n2/norma_meme.png\") center repeat-x;background-size:250px 250px}.sad{width:150px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad2{width:300px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad8{width:1200px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad_2{width:150px;height:150px;background:url(\"assets/n2/sad_2.png\") center repeat-x;background-size:150px 150px}.impossible_meme{width:250px;height:250px;background:url(\"assets/n2/impossible_meme.jpg\") center repeat-x;background-size:250px 250px}\n"
 module.exports = require('scssify').createStyle(css, {})
