@@ -15292,16 +15292,18 @@ $('.currentTime').html(moment(new Date()).format('HH:mm'));
 var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
     {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"waving.png"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"dance.png"},
-    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"champagne.png"},
+    {"userAlias":"АВ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"giphy.png"},
+    {"userAlias":"ЕБ","userValue":"Елена Билобородько КОММЕРЦИЯ",       "message":"dance.png"},
+    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"champagne.png"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Даже в туалете!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Несмотря на пятницу, чатик рабочий."},
+    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"fire.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
     {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"sad.png"},
-    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"sad2.png"},
+    {"userAlias":"АМ","userValue":"Александр Магдык ФИНАНСЫ",	        "message":"sad2.png"},
     {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"sad8.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Итак, главный вопрос на повестке дня."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Коллеги, нас с вами ждет открытие нового магазина!"},
@@ -15363,31 +15365,34 @@ var scenario = [
     {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"norma_meme.png"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Ребята, завтра все будут на корпоративе?"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Да!"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",	    "message":"Да!"},
+    {"userAlias":"ЕБ","userValue":"Елена Билобородько КОММЕРЦИЯ",	    "message":"Да!"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я вам из отпуска подарки везу!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"А где ты был?"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"В Китае!"},
-    {"userAlias":"system","userValue":"system",	                        "message":"Лена Белогородько КОММЕРЦИЯ удалилась из чата."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Лена Билобородько КОММЕРЦИЯ удалилась из чата."},
     {"userAlias":"system","userValue":"system",	                        "message":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ удалился из чата."},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я немного кашляю, но выпью терафлю и буду в порядке!"},
     {"userAlias":"system","userValue":"system",	                        "message":"Денис «Бэтмен» Поздняков удалил чат."}
     ];
 
 $('.fa-paperclip').on('click', function () {
-    // clearInterval(int);
-    // userMessage('GB','Gorbunov', 'new Date().getTime()');
+isPlaying=false;
 });
 var ii;
 var int;
+var isPlaying = false;
 $('.fa-paper-plane').on('click', function () {
-
-    ii = 0;
-    // clearTimeout(int);
-firstCicle();
+    isPlaying = true;
+    $('.mainWindow').width($(window).width());
+    $('.mainWindow').height($(window).width()/2.4);
+    $('.sendMsgWindow').css({'bottom':($(window).height()-$(window).width()/2.4)/2+'px'})
+    $('.msgWindow').children().remove();
+    ii = 0; 
+    firstCicle();
 });
 
     function firstCicle() {
-
+if(isPlaying){
         function voiceStartCallback() {
             console.log("Voice started");
         }
@@ -15400,13 +15405,21 @@ firstCicle();
         if (scenario[ii].userAlias == 'system') {
 
             systemMessage(scenario[ii].message);
-            speak(scenario[ii].message);
+            speak(scenario[ii].message).then(function (x) {
+                console.log(x);
+            });
         } else {
 
             userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
             speak(scenario[ii].message);
         }
+        }
+    //         setTimeout(() => {
+    //             ii++;
+    //     firstCicle();
+    // }, 1000);
     } 
+
         function voiceEndCallback() {
             console.log("Voice ended");
             lastUserName = scenario[ii].userValue;
@@ -15524,14 +15537,14 @@ function speak(inputTxt) {
           break;
         }
       }
-      utterThis.pitch = 0.5;
-      utterThis.rate = 1.3;
+      utterThis.pitch = 1;
+      utterThis.rate = 0.8;
       utterThis.lang = "ru-RU";
-      utterThis.volume = 0.5;
+      utterThis.volume = 0.0;
       synth.speak(utterThis);
     }
   }
 },{"./style.scss":5,"jquery":1,"moment":2,"scssify":3}],5:[function(require,module,exports){
-var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-color:black;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;overflow:hidden;background:url(\"./assets/grunge_BG.png\") center no-repeat;background-size:cover}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#250506;width:100%;height:50px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>.logo{font-size:100px;padding:0 10px;background:url(\"assets/n2/logo.png\") center no-repeat;background-size:cover;width:180px;height:34px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:70px;width:100%;background:linear-gradient(0deg, #250506, #250506 55%, #520d0f 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:45px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-color:rgba(255,255,255,0.8);border:5px solid black;background-size:auto 100%;border-radius:50%;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2);display:flex;justify-content:center;align-items:center;font-size:100px}.msgWindow>article>.userPlace{width:200px;border:none}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:rgba(255,255,255,0.8);border:2px solid #000;padding:0 20px;font-size:50px;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.5)}.msgWindow>article>div>.userName{font-weight:bold;color:#000}.msgWindow>article>div>.userMsg{color:#000;margin:20px;background-position-x:left}.msgWindow>.systemMessage{background-color:#250506;color:#fff;border-radius:20px;display:flex;justify-content:center;align-items:center;height:70px;margin:10px 100px;font-size:40px}.sendMsgWindow{padding:0 20px;width:100%;height:70px;background-color:#250506;bottom:0;z-index:900;position:fixed;display:flex;align-items:center;justify-content:center;color:#c52429}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#fff;width:85%;margin:0 10px;font-size:40px;border:2px solid #c52429;border-radius:50px;padding:0 30px;background-color:#c52429}.sendMsgWindow>input::placeholder{color:#fff}.Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.yanukovich{background:url(\"assets/users/user_yanukovich.jpg\") center no-repeat;background-size:auto 100%}.angry{width:150px;height:150px;background:url(\"assets/smiles/angry.png\") center repeat-x;background-size:150px 150px}.smirkface{width:150px;height:150px;background:url(\"assets/smiles/smirkface.png\") center repeat-x;background-size:150px 150px}.hmmface{width:150px;height:150px;background:url(\"assets/smiles/hmmface.png\") center repeat-x;background-size:150px 150px}.waving{width:150px;height:150px;background:url(\"assets/n2/waving.png\") center repeat-x;background-size:150px 150px}.champagne{width:150px;height:150px;background:url(\"assets/n2/champagne_sticker.png\") center repeat-x;background-size:150px 150px}.dance{width:150px;height:150px;background:url(\"assets/n2/dance.png\") center repeat-x;background-size:150px 150px}.flag{width:150px;height:150px;background:url(\"assets/n2/flag.png\") center repeat-x;background-size:150px 150px}.sad{width:150px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad2{width:300px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad8{width:1200px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad_2{width:150px;height:150px;background:url(\"assets/n2/sad_2.png\") center repeat-x;background-size:150px 150px}.norma_meme{width:344px;height:250px;background:url(\"assets/n2/norma_meme.png\") center repeat-x;background-size:344px 250px}.impossible_meme{width:344px;height:250px;background:url(\"assets/n2/imp_meme.png\") center repeat-x;background-size:344px 250px}\n"
+var css = "@import url(assets/fonts/fontawesome.css);@import url(\"https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap&subset=cyrillic,cyrillic-ext\");*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}h1,h2,h3,h4,ul,ol,div,span,figure{margin:0;padding:0}ul,ol{list-style:none}a{text-decoration:none}body{width:100%;height:100vh;padding:0;margin:0;overflow:hidden;margin:0 auto;font-family:'Open Sans', sans-serif;font-weight:normal;background-color:black;background-size:cover;position:fixed;z-index:0;display:flex;flex-direction:column;justify-content:center;align-items:center;scroll-behavior:smooth}.mainWindow{width:1920px;height:1080px;overflow:hidden}.header{width:100%;background-color:transparent;z-index:1000;color:#fff;position:fixed;height:300px}.header>.headerLine{display:flex;flex-direction:row;justify-content:space-between;align-items:center;background-color:#250506;width:100%;height:50px;padding:0 20px;margin-bottom:-3px}.header>.headerLine>.leftModule>.logo{font-size:100px;padding:0 10px;background:url(\"assets/n2/logo.png\") center no-repeat;background-size:cover;width:180px;height:34px}.header>.headerLine>.rightModule>i{font-size:36px;padding:0 10px}.header>.headerLine>.rightModule>.currentTime{font-size:36px;padding:0 20px}.header>.title{height:70px;width:100%;background:linear-gradient(0deg, #250506, #250506 55%, #520d0f 100%);display:flex;justify-content:center;align-items:center;font-weight:bold;font-size:45px;color:#fff}.msgWindow{z-index:0;width:100%;scroll-behavior:smooth;padding:0px 100px;transition:transform 300ms;bottom:0;transform:translate(0px, 1000px)}.msgWindow>article{display:flex;flex-direction:row;align-items:center;padding:10px auto;margin:10px 0}.msgWindow>article>.userIcon{width:200px;height:200px;background-color:#fff;border:5px solid black;background-size:auto 100%;border-radius:50%;box-shadow:5px 5px 5px 0 rgba(0,0,0,0.2);display:flex;justify-content:center;align-items:center;font-size:100px}.msgWindow>article>.userPlace{width:200px;border:none}.msgWindow>article>div{border-radius:0 20px 20px 20px;margin:0 20px;background-color:#fff;border:2px solid #000;padding:0 20px;font-size:50px}.msgWindow>article>div>.userName{font-weight:bold;color:#000}.msgWindow>article>div>.userMsg{color:#000;margin:20px;background-position-x:left}.msgWindow>.systemMessage{background-color:#250506;color:#fff;border-radius:20px;display:flex;justify-content:center;align-items:center;height:70px;margin:10px 100px;font-size:40px}.sendMsgWindow{padding:0 20px;width:100%;height:70px;background-color:#250506;bottom:0;z-index:900;position:fixed;display:flex;align-items:center;justify-content:center;color:#c52429}.sendMsgWindow>i{font-size:50px;margin:0 10px}.sendMsgWindow>input{color:#fff;width:85%;margin:0 10px;font-size:40px;border:2px solid #c52429;border-radius:50px;padding:0 30px;background-color:#c52429}.sendMsgWindow>input::placeholder{color:#fff}.Shark{background:url(\"assets/users/user_shark.png\") center no-repeat;background-size:auto 100%}.Mouse{background:url(\"assets/users/user_mouse.png\") center no-repeat;background-size:auto 100%}.Gorbunov{background:url(\"assets/users/user_gorbunov.jpg\") center no-repeat;background-size:auto 100%}.yanukovich{background:url(\"assets/users/user_yanukovich.jpg\") center no-repeat;background-size:auto 100%}.angry{width:150px;height:150px;background:url(\"assets/smiles/angry.png\") center repeat-x;background-size:150px 150px}.smirkface{width:150px;height:150px;background:url(\"assets/smiles/smirkface.png\") center repeat-x;background-size:150px 150px}.hmmface{width:150px;height:150px;background:url(\"assets/smiles/hmmface.png\") center repeat-x;background-size:150px 150px}.waving{width:150px;height:150px;background:url(\"assets/n2/waving.png\") center repeat-x;background-size:150px 150px}.champagne{width:150px;height:150px;background:url(\"assets/n2/champagne_sticker.png\") center repeat-x;background-size:150px 150px}.dance{width:150px;height:150px;background:url(\"assets/n2/dance.png\") center repeat-x;background-size:150px 150px}.flag{width:150px;height:150px;background:url(\"assets/n2/flag.png\") center repeat-x;background-size:150px 150px}.sad{width:150px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad2{width:300px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad8{width:1200px;height:150px;background:url(\"assets/n2/sad_3.png\") center repeat-x;background-size:150px 150px}.sad_2{width:150px;height:150px;background:url(\"assets/n2/sad_2.png\") center repeat-x;background-size:150px 150px}.norma_meme{width:600px;height:450px;background:url(\"assets/n2/norma_meme.png\") center repeat-x;background-size:600px 450px}.impossible_meme{width:600px;height:450px;background:url(\"assets/n2/imp_meme.png\") center repeat-x;background-size:600px 450px}.giphy{width:600px;height:450px;background:url(\"assets/n2/giphy.gif\") center no-repeat;background-size:600px 450px}.fire{width:456px;height:150px;background:url(\"assets/n2/fire.png\") center no-repeat;background-size:456px 150px}\n"
 module.exports = require('scssify').createStyle(css, {})
 },{"scssify":3}]},{},[4]);

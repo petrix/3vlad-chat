@@ -80,8 +80,8 @@ body {
     // height: 100vh;
     // background-color: #ccc;
     overflow: hidden;
-    background: url('./assets/grunge_BG.png')center no-repeat;
-    background-size: cover;
+    // background: url('./assets/grunge_BG.png')center no-repeat;
+    // background-size: cover;
 }
 
 .header {
@@ -179,7 +179,7 @@ body {
             width: 200px;
             height: 200px;
             // background: url('assets/users/gorbunov.jpg') center no-repeat;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 1);
             border: 5px solid black;
             background-size: auto 100%;
             border-radius: 50%;
@@ -213,11 +213,11 @@ body {
             border-radius: 0 20px 20px 20px;
             margin: 0 20px;
             // background-color: #250506;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 1);
             border: 2px solid #000;
             padding: 0 20px;
             font-size: 50px;
-            box-shadow: 5px 5px 5px 0 rgba(#000000, 0.5);
+            // box-shadow: 5px 5px 5px 0 rgba(#000000, 0.5);
 
             &>.userName {
                 font-weight: bold;
@@ -413,15 +413,29 @@ body {
 }
 
 .norma_meme {
-    width: 344px;
-    height: 250px;
+    width: 600px;
+    height: 450px;
     background: url('assets/n2/norma_meme.png') center repeat-x;
-    background-size: 344px 250px;
+    background-size: 600px 450px;
 }
 
 .impossible_meme {
-    width: 344px;
-    height: 250px;
+    width: 600px;
+    height: 450px;
     background: url('assets/n2/imp_meme.png') center repeat-x;
-    background-size: 344px 250px;
+    background-size: 600px 450px;
+}
+
+.giphy {
+    width: 600px;
+    height: 450px;
+    background: url('assets/n2/giphy.gif') center no-repeat;
+    background-size: 600px 450px;
+}
+
+.fire {
+    width: 456px;
+    height: 150px;
+    background: url('assets/n2/fire.png') center no-repeat;
+    background-size: 456px 150px;
 }

@@ -49,16 +49,18 @@ $('.currentTime').html(moment(new Date()).format('HH:mm'));
 var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
     {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"waving.png"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",       "message":"dance.png"},
-    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"champagne.png"},
+    {"userAlias":"АВ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"giphy.png"},
+    {"userAlias":"ЕБ","userValue":"Елена Билобородько КОММЕРЦИЯ",       "message":"dance.png"},
+    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"champagne.png"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Даже в туалете!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Несмотря на пятницу, чатик рабочий."},
+    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"fire.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
     {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"sad.png"},
-    {"userAlias":"АМ","userValue":"Александр Магда ФИНАНСЫ",	        "message":"sad2.png"},
+    {"userAlias":"АМ","userValue":"Александр Магдык ФИНАНСЫ",	        "message":"sad2.png"},
     {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"sad8.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Итак, главный вопрос на повестке дня."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Коллеги, нас с вами ждет открытие нового магазина!"},
@@ -120,31 +122,34 @@ var scenario = [
     {"userAlias":"СГ","userValue":"Сергей Галаса «Гадкий я!» IT-ОТДЕЛ",	"message":"norma_meme.png"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Ребята, завтра все будут на корпоративе?"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Да!"},
-    {"userAlias":"ЕБ","userValue":"Елена Белогородько КОММЕРЦИЯ",	    "message":"Да!"},
+    {"userAlias":"ЕБ","userValue":"Елена Билобородько КОММЕРЦИЯ",	    "message":"Да!"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я вам из отпуска подарки везу!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"А где ты был?"},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"В Китае!"},
-    {"userAlias":"system","userValue":"system",	                        "message":"Лена Белогородько КОММЕРЦИЯ удалилась из чата."},
+    {"userAlias":"system","userValue":"system",	                        "message":"Лена Билобородько КОММЕРЦИЯ удалилась из чата."},
     {"userAlias":"system","userValue":"system",	                        "message":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ удалился из чата."},
     {"userAlias":"СЧ","userValue":"СЧАСТЛИВЧИК",	                    "message":"Я немного кашляю, но выпью терафлю и буду в порядке!"},
     {"userAlias":"system","userValue":"system",	                        "message":"Денис «Бэтмен» Поздняков удалил чат."}
     ];
 
 $('.fa-paperclip').on('click', function () {
-    // clearInterval(int);
-    // userMessage('GB','Gorbunov', 'new Date().getTime()');
+isPlaying=false;
 });
 var ii;
 var int;
+var isPlaying = false;
 $('.fa-paper-plane').on('click', function () {
-
-    ii = 0;
-    // clearTimeout(int);
-firstCicle();
+    isPlaying = true;
+    $('.mainWindow').width($(window).width());
+    $('.mainWindow').height($(window).width()/2.4);
+    $('.sendMsgWindow').css({'bottom':($(window).height()-$(window).width()/2.4)/2+'px'})
+    $('.msgWindow').children().remove();
+    ii = 0; 
+    firstCicle();
 });
 
     function firstCicle() {
-
+if(isPlaying){
         function voiceStartCallback() {
             console.log("Voice started");
         }
@@ -157,13 +162,21 @@ firstCicle();
         if (scenario[ii].userAlias == 'system') {
 
             systemMessage(scenario[ii].message);
-            speak(scenario[ii].message);
+            speak(scenario[ii].message).then(function (x) {
+                console.log(x);
+            });
         } else {
 
             userMessage(scenario[ii].userAlias,scenario[ii].userValue, scenario[ii].message);
             speak(scenario[ii].message);
         }
+        }
+    //         setTimeout(() => {
+    //             ii++;
+    //     firstCicle();
+    // }, 1000);
     } 
+
         function voiceEndCallback() {
             console.log("Voice ended");
             lastUserName = scenario[ii].userValue;
@@ -281,10 +294,10 @@ function speak(inputTxt) {
           break;
         }
       }
-      utterThis.pitch = 0.5;
-      utterThis.rate = 1.3;
+      utterThis.pitch = 1;
+      utterThis.rate = 0.8;
       utterThis.lang = "ru-RU";
-      utterThis.volume = 0.5;
+      utterThis.volume = 0.0;
       synth.speak(utterThis);
     }
   }
