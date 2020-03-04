@@ -297,7 +297,7 @@ function speak(inputTxt) {
       utterThis.pitch = 1;
       utterThis.rate = 0.8;
       utterThis.lang = "ru-RU";
-      utterThis.volume = 0.0;
+      utterThis.volume = 1;
       synth.speak(utterThis);
     }
   }
