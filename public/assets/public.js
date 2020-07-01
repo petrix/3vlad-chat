@@ -24,8 +24,8 @@ console.log(lang);
 
 // $('.mainWindow').height($(window).width()/2.4);
 function resize() {
-    $('.mainWindow').width($(window).width());
-    $('.mainWindow').height($(window).width()/2.4);
+    // $('.mainWindow').width($(window).width());
+    // $('.mainWindow').height($(window).width()/2.4);
 
     // var bodyWidth = $(window).width();
     // var bodyHeight = $(window).height();
@@ -49,14 +49,14 @@ $('.currentTime').html(moment(new Date()).format('HH:mm'));
 var scenario = [
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",           "message":"Всем привет! С пятницей, коллеги!"},
     {"userAlias":"АВ","userValue":"Алена Власюк HR",	                "message":"waving.png"},
-    {"userAlias":"АВ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"giphy.png"},
+    {"userAlias":"АЗ","userValue":"Александр «СУПЕРМЕН» Злобин",	    "message":"giphy.png"},
     {"userAlias":"ЕБ","userValue":"Елена Билобородько КОММЕРЦИЯ",       "message":"dance.png"},
-    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"champagne.png"},
+    {"userAlias":"АК","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"champagne.png"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Кто-то уже пьет на рабочем месте?"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Я по камерам везде проверю!"},
     {"userAlias":"АГ","userValue":"Андрей Герц СЛУЖБА БЕЗОПАСНОСТИ",	"message":"Даже в туалете!"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Несмотря на пятницу, чатик рабочий."},
-    {"userAlias":"АЗ","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"fire.png"},
+    {"userAlias":"АК","userValue":"Александр Крупка РАЗВИТИЕ",	        "message":"fire.png"},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Есть актуальные вопросы."},
     {"userAlias":"ДП","userValue":"Денис «БЭТМЕН» Поздняков",	        "message":"Их надо решить в кратчайшие сроки!"},
     {"userAlias":"МИ","userValue":"Михаил Иванцов МАРКЕТИНГ",	        "message":"sad.png"},
