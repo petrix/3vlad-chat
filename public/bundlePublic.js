@@ -16761,7 +16761,7 @@ if(isPlaying){
     } 
 
         function voiceEndCallback() {
-            console.log("Voice ended");
+            // console.log("Voice ended");
             lastUserName = scenario[ii].userValue;
             ii++;
             firstCicle();
