@@ -2,32 +2,54 @@ require('scssify');
 require('./style.scss');
 var $ = require('jquery');
 
+
+let mainWindow = document.querySelector('.mainWindow');
+let theWindow = document.querySelector('body');
+let msgWindow = document.querySelector('.msgWindow');
+var ii;
+var int;
+var isPlaying = false;
+
 var synth = window.speechSynthesis;
 var lastUserName;
 var lang = window.navigator.languages ? window.navigator.languages[0] : null;
 lang = lang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
-if (lang.indexOf('-') !== -1)
+if (lang.indexOf('-') !== -1){
     lang = lang.split('-')[0];
-if (lang.indexOf('_') !== -1)
-    // lang = lang.split('_')[0];
-console.log(lang);
+    console.log(lang)
+}  
+if (lang.indexOf('_') !== -1){
+    console.log(lang);
+}
 
+var translateY;
 function resize() {
-    translateY = $('.mainWindow').height();
-    $('.mainWindow').width($(window).width());
-    $('.mainWindow').height($(window).width() / 2.4);
+    // translateY = $('.mainWindow').height();
+    translateY = theWindow.offsetWidth/2.4;
+    console.log(translateY);
+    mainWindow.style.width = theWindow.offsetWidth+'px';
+    mainWindow.style.height = theWindow.offsetWidth/2.4+'px';
+    // console.log(theWindow.offsetWidth, theWindow.offsetHeight);
+    // console.log(mainWindow.offsetWidth, mainWindow.offsetHeight);
+    // $('.mainWindow').width($(window).width());
+    // $('.mainWindow').height($(window).width() / 2.4);
+    msgWindow.style.height = mainWindow.offsetHeight+'px';
+    // $('.msgWindow').height( $('.mainWindow').height());
+
     $('.sendMsgWindow').css({
         'bottom': ($(window).height() - $(window).width() / 2.4) / 2 + 'px'
     })
-    $('.msgWindow').children().remove();
+    // $('.msgWindow').children().remove();
     ii = 0;
 }
-
+resize();
 
 $(window).on('resize', resize);
 var translateMessageStep = 100;
 var currentTime = new Date();
-$('.currentTime').html(currentTime.getHours() + ":" + currentTime.getMinutes());
+
+document.querySelector('.currentTime').innerHTML = currentTime.getHours() + ":" + currentTime.getMinutes();
+// $('.currentTime').html(currentTime.getHours() + ":" + currentTime.getMinutes());
 
 var scenario = [{
         "userAlias": "ДП",
@@ -449,9 +471,7 @@ var scenario = [{
 $('.fa-paperclip').on('click', function () {
     isPlaying = false;
 });
-var ii;
-var int;
-var isPlaying = false;
+
 $('.fa-paper-plane').on('click', function () {
     isPlaying = true;
     $('.mainWindow').width($(window).width());
@@ -478,9 +498,7 @@ function firstCicle() {
         if (scenario[ii].userAlias == 'system') {
 
             systemMessage(scenario[ii].message);
-            speak(scenario[ii].message).then(function (x) {
-                console.log(x);
-            });
+            speak(scenario[ii].message);
         } else {
 
             userMessage(scenario[ii].userAlias, scenario[ii].userValue, scenario[ii].message);
@@ -490,7 +508,7 @@ function firstCicle() {
 }
 
 function voiceEndCallback() {
-    // console.log("Voice ended");
+    console.log("Voice ended");
     lastUserName = scenario[ii].userValue;
     ii++;
     firstCicle();
@@ -552,8 +570,9 @@ function systemMessage(message) {
 
 
 var voiceSelect = document.querySelector('select');
-
+    let voices;
 function populateVoiceList() {
+
     voices = synth.getVoices().sort(function (a, b) {
         //   console.log(a, b);
 
@@ -563,6 +582,7 @@ function populateVoiceList() {
         else if (aname == bname) return 0;
         else return +1;
     });
+    console.log(voices);
     var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
     voiceSelect.innerHTML = '';
     for (i = 0; i < voices.length; i++) {
@@ -606,7 +626,7 @@ function speak(inputTxt) {
                 break;
             }
         }
-        utterThis.pitch = 0.1;
+        utterThis.pitch = 0.3;
         utterThis.rate = 0.8;
         utterThis.lang = "ru-RU";
         utterThis.volume = 0;
@@ -614,4 +634,3 @@ function speak(inputTxt) {
     }
 }
 
-resize();

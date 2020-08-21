@@ -16,16 +16,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^16.5.0",
-    "scssify": "^3.0.1",
-    "uglify-js": "^3.7.5",
-    "watchify": "^3.11.1"
+    "browserify": "latest",
+    "scssify": "latest",
+    "uglify-js": "latest",
+    "watchify": "latest"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "jquery": "^3.3.1",
-    "moment": "^2.24.0",
-    "socket.io-client": "^2.3.0",
-    "colour": "^0.7.1"
+    "express": "latest",
+    "jquery": "latest",
+    "moment": "latest",
+    "socket.io-client": "latest",
+    "colour": "latest"
   }
 }
